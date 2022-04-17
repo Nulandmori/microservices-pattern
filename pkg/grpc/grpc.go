@@ -9,7 +9,6 @@ import (
 	"github.com/go-logr/logr"
 	middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
-	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc"
 	channelz "google.golang.org/grpc/channelz/service"
 	"google.golang.org/grpc/reflection"
@@ -28,7 +27,6 @@ func NewServer(port int, logger logr.Logger, register func(server *grpc.Server))
 	interceptors := []grpc.UnaryServerInterceptor{
 		interceptor.NewRequestLogger(logger.WithName("request")),
 		grpc_auth.UnaryServerInterceptor(defaultNOPAuthFunc),
-		otelgrpc.UnaryServerInterceptor(),
 	}
 
 	opts := []grpc.ServerOption{

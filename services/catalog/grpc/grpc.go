@@ -14,7 +14,7 @@ import (
 	customer "github.com/Nulandmori/micorservices-pattern/services/customer/proto"
 	item "github.com/Nulandmori/micorservices-pattern/services/item/proto"
 	"github.com/go-logr/logr"
-	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
@@ -50,7 +50,7 @@ func RunServer(ctx context.Context, port int, logger logr.Logger) error {
 
 	iopts := []grpc.DialOption{
 		grpc.WithChainUnaryInterceptor(
-			otelgrpc.UnaryClientInterceptor(),
+
 			interceptor.AuthServiceUnnaryClientInterceptor(iaudience),
 		),
 	}
@@ -58,7 +58,7 @@ func RunServer(ctx context.Context, port int, logger logr.Logger) error {
 
 	copts := []grpc.DialOption{
 		grpc.WithChainUnaryInterceptor(
-			otelgrpc.UnaryClientInterceptor(),
+
 			interceptor.AuthServiceUnnaryClientInterceptor(caudience),
 		),
 	}
